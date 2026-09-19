@@ -1,0 +1,261 @@
+﻿/* ============ БАЗА ============ */
+:root{
+  --primary:#2e7d32; --primary-light:#4caf50; --primary-dark:#1b5e20;
+  --buy:#1565c0; --buy-light:#42a5f5;
+  --hold:#2e7d32; --hold-light:#66bb6a;
+  --create:#e65100; --create-light:#ff9800;
+  --fire:#c62828;
+  --bg:#eef2ee; --card:#ffffff;
+  --text:#0f1720; --muted:#64748b;
+  --border:#e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.container{max-width:1400px;margin:0 auto;padding:0 20px}
+
+/* ============ HEADER ============ */
+.header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000;box-shadow:var(--shadow-sm)}
+.header .container{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;gap:20px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{font-size:1.8rem}
+.logo h1{font-size:1.15rem;color:var(--primary-dark)}
+.subtitle{font-size:.75rem;color:var(--muted)}
+.nav{display:flex;gap:22px}
+.nav-link{text-decoration:none;color:var(--muted);font-weight:500;font-size:.9rem;transition:.2s}
+.nav-link:hover,.nav-link.active{color:var(--primary)}
+.status-indicator{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted)}
+.status-indicator .dot{width:8px;height:8px;border-radius:50%;background:#f59e0b;animation:pulse 1.5s infinite}
+.status-indicator.ok .dot{background:#22c55e;animation:none}
+.status-indicator.error .dot{background:#ef4444;animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ============ HERO ============ */
+.hero{
+  background:linear-gradient(135deg,#0d3d13 0%,#1b5e20 40%,#2e7d32 100%);
+  color:#fff;padding:56px 0 64px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;
+  background:radial-gradient(circle, rgba(76,175,80,.25), transparent 70%);
+  pointer-events:none;
+}
+.hero h2{font-size:2rem;margin-bottom:12px;position:relative;font-weight:800;letter-spacing:-.5px}
+.hero>p{opacity:.9;margin-bottom:38px;font-size:1rem;position:relative}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1000px;margin:0 auto;position:relative}
+.stat{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;padding:22px 16px;
+  backdrop-filter:blur(10px);
+  transition:transform .25s, background .25s;
+}
+.stat:hover{transform:translateY(-4px);background:rgba(255,255,255,.18)}
+.stat-value{
+  display:block;
+  font-size:2.2rem;
+  font-weight:800;
+  letter-spacing:-1px;
+  line-height:1.1;
+  background:linear-gradient(180deg,#fff,#c8e6c9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.stat-label{font-size:.8rem;opacity:.85;margin-top:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:500}
+
+/* ============ MAP ============ */
+.map-section{padding:50px 0}
+.section-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:15px}
+.section-header h2{font-size:1.5rem;font-weight:700}
+.map-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.control-group{display:flex;gap:6px;align-items:center;background:#fff;padding:6px 10px;border-radius:10px;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.control-group label{font-size:.8rem;color:var(--muted);font-weight:500}
+.control-group select{padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:.85rem;background:#fff;font-weight:500}
+.btn{padding:8px 14px;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:8px;cursor:pointer;font-weight:600;font-size:.85rem;transition:.15s}
+.btn:hover{border-color:var(--primary);color:var(--primary)}
+.btn.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 2px 8px rgba(46,125,50,.3)}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-primary:hover{background:var(--primary-dark);color:#fff}
+
+.map-wrapper{position:relative;display:grid;grid-template-columns:1fr 400px;gap:16px;min-height:640px}
+.map{height:640px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.map-sidebar{background:#fff;border-radius:16px;padding:0;box-shadow:var(--shadow-lg);overflow-y:auto;max-height:640px}
+.sidebar-placeholder{text-align:center;color:var(--muted);padding:80px 20px}
+.sidebar-placeholder h3{margin-bottom:10px;color:var(--text);font-size:1.1rem}
+
+/* ============ SIDEBAR (детали участка) ============ */
+.sidebar-hero{
+  padding:20px;
+  background:linear-gradient(135deg,#1b5e20,#2e7d32);
+  color:#fff;
+  border-radius:16px 16px 0 0;
+}
+.sidebar-hero h3{font-size:1.25rem;margin-bottom:4px;font-weight:700}
+.sidebar-hero .region{font-size:.82rem;opacity:.9;margin-bottom:16px}
+
+.sidebar-big-metrics{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;
+}
+.big-metric{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;padding:12px;text-align:center;
+}
+.big-metric-value{font-size:1.6rem;font-weight:800;line-height:1;letter-spacing:-.5px}
+.big-metric-label{font-size:.7rem;opacity:.85;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+.sidebar-body{padding:20px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:.87rem}
+.kv:last-child{border-bottom:none}
+.kv span:first-child{color:var(--muted)}
+.kv span:last-child{font-weight:700;text-align:right}
+.kv.kv-highlight span:last-child{font-size:1.05rem;color:var(--primary-dark)}
+
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-size:.82rem;font-weight:700;margin-top:14px;letter-spacing:.3px}
+.badge.buy{background:#e3f2fd;color:#0d47a1}
+.badge.hold{background:#e8f5e9;color:#1b5e20}
+.badge.create{background:#fff3e0;color:#e65100}
+.fire-warning{background:#ffebee;border-left:4px solid var(--fire);padding:10px 12px;border-radius:6px;font-size:.82rem;margin-top:12px;color:#b71c1c}
+
+/* ============ MAP LEGEND ============ */
+.map-legend{display:flex;gap:26px;margin-top:16px;flex-wrap:wrap;font-size:.9rem;font-weight:500;padding:14px 18px;background:#fff;border-radius:12px;box-shadow:var(--shadow-sm)}
+.legend-item{display:flex;align-items:center;gap:8px;color:var(--text)}
+.legend-item i{width:16px;height:16px;border-radius:5px;display:inline-block;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+
+/* ============ METRIC CARDS (главные!) ============ */
+.metrics-section{padding:60px 0;background:#fff}
+.metrics-section h2{text-align:center;font-size:1.7rem;margin-bottom:12px;font-weight:800;letter-spacing:-.5px}
+.metrics-section>div>p.section-sub{text-align:center;color:var(--muted);margin-bottom:38px;font-size:.95rem}
+
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.metric-card{
+  position:relative;
+  padding:32px 26px 28px;
+  border-radius:20px;
+  background:#fff;
+  border:2px solid var(--border);
+  transition:transform .3s, box-shadow .3s, border-color .3s;
+  overflow:hidden;
+}
+.metric-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+}
+.metric-card.buy::before{background:linear-gradient(90deg,var(--buy),var(--buy-light))}
+.metric-card.hold::before{background:linear-gradient(90deg,var(--hold),var(--hold-light))}
+.metric-card.create::before{background:linear-gradient(90deg,var(--create),var(--create-light))}
+
+.metric-card.buy{border-color:#bbdefb}
+.metric-card.hold{border-color:#c8e6c9}
+.metric-card.create{border-color:#ffe0b2}
+
+.metric-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+
+.metric-icon{font-size:2.6rem;margin-bottom:14px;display:block}
+.metric-card h3{font-size:1.35rem;margin-bottom:8px;font-weight:800;letter-spacing:-.3px}
+.metric-card.buy h3{color:var(--buy)}
+.metric-card.hold h3{color:var(--hold)}
+.metric-card.create h3{color:var(--create)}
+
+.metric-card p{color:var(--muted);font-size:.9rem;margin-bottom:20px;min-height:42px;line-height:1.45}
+
+/* ГЛАВНАЯ цифра — огромная */
+.metric-value{
+  font-size:3.2rem;
+  font-weight:900;
+  letter-spacing:-2px;
+  line-height:1;
+  margin-bottom:6px;
+  font-variant-numeric:tabular-nums;
+}
+.metric-card.buy .metric-value{color:var(--buy)}
+.metric-card.hold .metric-value{color:var(--hold)}
+.metric-card.create .metric-value{color:var(--create)}
+
+.metric-value-unit{
+  font-size:1rem;
+  font-weight:600;
+  color:var(--muted);
+  margin-left:6px;
+  letter-spacing:0;
+}
+
+.metric-sub{font-size:.85rem;color:var(--muted);margin-top:10px;padding-top:12px;border-top:1px dashed var(--border)}
+
+/* Мини-прогресс-бар внутри карточки */
+.metric-bar{
+  height:6px;border-radius:6px;background:#f1f5f9;margin:16px 0 4px;overflow:hidden;
+}
+.metric-bar-fill{height:100%;border-radius:6px;transition:width .6s ease}
+.metric-card.buy .metric-bar-fill{background:linear-gradient(90deg,var(--buy),var(--buy-light))}
+.metric-card.hold .metric-bar-fill{background:linear-gradient(90deg,var(--hold),var(--hold-light))}
+.metric-card.create .metric-bar-fill{background:linear-gradient(90deg,var(--create),var(--create-light))}
+
+/* ============ ANALYTICS ============ */
+.analytics-section{padding:60px 0}
+.analytics-section h2{text-align:center;font-size:1.7rem;margin-bottom:38px;font-weight:800;letter-spacing:-.5px}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.chart-card{background:#fff;border-radius:16px;padding:24px;box-shadow:var(--shadow-md)}
+.chart-card h3{font-size:.95rem;margin-bottom:16px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.chart-card canvas{max-height:320px}
+
+/* ============ TABLE ============ */
+.table-section{padding:60px 0;background:#fff}
+.table-section h2{font-size:1.7rem;margin-bottom:24px;font-weight:800;letter-spacing:-.5px}
+.table-wrapper{overflow-x:auto;border-radius:16px;box-shadow:var(--shadow-md);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:.9rem}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+th{
+  background:linear-gradient(180deg,#1b5e20,#2e7d32);
+  color:#fff;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.4px;
+}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:#f0f9f0}
+tbody tr:last-child td{border-bottom:none}
+
+/* Ключевые колонки — выделить */
+td.col-q{font-size:1.15rem;font-weight:800;color:var(--primary-dark);font-variant-numeric:tabular-nums}
+td.col-value{font-weight:700;color:#0d47a1;font-variant-numeric:tabular-nums}
+td.col-area{font-weight:600}
+td.col-dc{font-weight:600;font-variant-numeric:tabular-nums}
+
+.status-badge{padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.3px}
+.status-badge.buy{background:#e3f2fd;color:#0d47a1}
+.status-badge.hold{background:#e8f5e9;color:#1b5e20}
+.status-badge.create{background:#fff3e0;color:#e65100}
+
+/* ============ ABOUT ============ */
+.about-section{padding:60px 0}
+.about-section h2{text-align:center;font-size:1.7rem;margin-bottom:32px;font-weight:800;letter-spacing:-.5px}
+.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.about-card{padding:24px;border-radius:14px;background:#fff;border-left:4px solid var(--primary);box-shadow:var(--shadow-sm)}
+.about-card h3{margin-bottom:10px;color:var(--primary-dark);font-size:1rem;font-weight:700}
+.about-card p,.about-card li{color:var(--muted);font-size:.9rem}
+
+/* ============ FOOTER ============ */
+.footer{background:linear-gradient(135deg,#0d3d13,#1b5e20);color:#fff;padding:32px 0;text-align:center;margin-top:40px}
+.footer p{font-size:.88rem;opacity:.9}
+.disclaimer{font-size:.78rem!important;opacity:.6!important;margin-top:8px}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1100px){
+  .map-wrapper{grid-template-columns:1fr}
+  .map{height:520px}
+  .map-sidebar{max-height:none}
+}
+@media(max-width:900px){
+  .metrics-grid{grid-template-columns:1fr}
+  .analytics-grid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .hero h2{font-size:1.4rem}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .stat-value{font-size:1.7rem}
+  .about-grid{grid-template-columns:1fr}
+  .nav{display:none}
+  .section-header{flex-direction:column}
+  .metric-value{font-size:2.6rem}
+}

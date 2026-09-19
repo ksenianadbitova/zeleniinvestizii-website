@@ -1,0 +1,38 @@
+﻿# === Растры (большие, отдельно) ===
+data/rasters/
+data/carbon.db
+data/carbon.db-shm
+data/carbon.db-wal
+
+# === Legacy ===
+_backup_legacy/
+
+# === Node ===
+node_modules/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Логи ===
+*.log
+npm-debug.log*
+
+# === Временные ===
+structure.txt
+api-check.json
+
+# === Env ===
+.env
+.env.local
+
+# === Builds ===
+dist/
+build/

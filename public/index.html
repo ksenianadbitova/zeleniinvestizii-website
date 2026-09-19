@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Углеродные единицы — Карта и метрики</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <span class="logo-icon">🌱</span>
+      <div>
+        <h1>Углеродные единицы</h1>
+        <p class="subtitle">Спутниковая верификация «зелёных» инвестиций</p>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#map-section" class="nav-link active">Карта</a>
+      <a href="#metrics-section" class="nav-link">Метрики</a>
+      <a href="#analytics-section" class="nav-link">Аналитика</a>
+      <a href="#about-section" class="nav-link">О проекте</a>
+    </nav>
+    <div class="status-indicator" id="status-indicator">
+      <span class="dot"></span> <span id="status-text">Загрузка...</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <h2>Найдите, где купить, держать или создать свою углеродную ферму</h2>
+    <p>Данные ESA CCI Biomass v7.0, Sentinel-2 L2A, Hansen GFC 2025 v1.13, MODIS MCD64A1 v6.1</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-value" id="stat-aoi">—</span><span class="stat-label">Участков</span></div>
+      <div class="stat"><span class="stat-value" id="stat-area">—</span><span class="stat-label">Гектаров</span></div>
+      <div class="stat"><span class="stat-value" id="stat-units">—</span><span class="stat-label">Углеродных единиц</span></div>
+      <div class="stat"><span class="stat-value" id="stat-value">—</span><span class="stat-label">Потенциал, ₽</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="map-section" class="map-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Карта участков</h2>
+      <div class="map-controls">
+        <div class="control-group">
+          <label>Период:</label>
+          <select id="year-start">
+            <option>2019</option><option>2020</option><option>2021</option><option>2022</option>
+          </select>
+          <span>—</span>
+          <select id="year-end">
+            <option>2022</option><option>2023</option><option selected>2024</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <button class="btn active" data-layer="units">Единицы</button>
+          <button class="btn" data-layer="value">Стоимость</button>
+          <button class="btn" data-layer="change">ΔC</button>
+          <button class="btn" data-layer="fire">Пожары</button>
+        </div>
+        <div class="control-group">
+          <button class="btn btn-primary" id="btn-recalc">Пересчитать</button>
+        </div>
+      </div>
+    </div>
+    <div class="map-wrapper">
+      <div id="map" class="map"></div>
+      <div class="map-sidebar" id="sidebar">
+        <div class="sidebar-placeholder">
+          <h3>👆 Выберите участок</h3>
+          <p>Кликните по полигону на карте, чтобы увидеть детальные метрики</p>
+        </div>
+      </div>
+    </div>
+    <div class="map-legend">
+      <span class="legend-item"><i style="background:#1565c0"></i> Покупать</span>
+      <span class="legend-item"><i style="background:#2e7d32"></i> Держать</span>
+      <span class="legend-item"><i style="background:#e65100"></i> Создать ферму</span>
+      <span class="legend-item"><i style="background:#c62828"></i> Пожар</span>
+    </div>
+  </div>
+</section>
+
+<section id="metrics-section" class="metrics-section">
+  <div class="container">
+    <h2>Метрики для инвестора</h2>
+    <p class="section-sub">Три стратегии: купить готовые единицы, удерживать свои, или создать ферму с нуля</p>
+    <div class="metrics-grid" id="metrics-cards"></div>
+  </div>
+</section>
+
+<section id="analytics-section" class="analytics-section">
+  <div class="container">
+    <h2>Аналитика</h2>
+    <div class="analytics-grid">
+      <div class="chart-card"><h3>Динамика запаса углерода, т С</h3><canvas id="chart-stock"></canvas></div>
+      <div class="chart-card"><h3>Потенциальные единицы по участкам</h3><canvas id="chart-units"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="container">
+    <h2>Детальные данные</h2>
+    <div class="table-wrapper">
+      <table id="aoi-table">
+        <thead>
+          <tr>
+            <th>Участок</th><th>Регион</th><th>Площадь, га</th>
+            <th>Запас t₀, т С/га</th><th>Запас t₁, т С/га</th>
+            <th>ΔC, т С</th><th>CO₂-экв., т</th>
+            <th>Q, ед.</th><th>Стоимость (1500 ₽)</th><th>Статус</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"><tr><td colspan="10" style="text-align:center">Загрузка...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="about-section" class="about-section">
+  <div class="container">
+    <h2>О проекте</h2>
+    <div class="about-grid">
+      <div class="about-card"><h3>🔬 Методология</h3><p>МГЭИК 2006, метод разности запасов, CF = 0,47 т С/т сухого вещества</p></div>
+      <div class="about-card"><h3>🛰️ Источники</h3><ul id="sources-list" style="font-size:.85rem;padding-left:18px"></ul></div>
+      <div class="about-card"><h3>📊 Неопределённость</h3><p>Вычет UNC, порог H/R ≥ 1, резерв BUF = 15%</p></div>
+      <div class="about-card"><h3>⚠️ Ограничения</h3><p>Сценарные допущения. Результат не является сертифицированными углеродными единицами.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>Космохакатон 2026 • Кейс SR Data • Верификация углеродных кредитов</p>
+    <p class="disclaimer">Данные носят сценарный характер. Реальная торговля и выпуск в реестре не выполняются.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/api.js"></script>
+<script src="js/map.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

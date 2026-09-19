@@ -1,0 +1,18 @@
+﻿{
+  "name": "carbon-credits-service",
+  "version": "1.0.0",
+  "description": "Верификация углеродных кредитов по спутниковым данным",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "init-db": "node server/init-db.js",
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "express": "^4.19.2"
+  }
+}

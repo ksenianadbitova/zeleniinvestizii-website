@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Углеродные единицы — Карта возможностей</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <div>
+                    <h1>Углеродные единицы</h1>
+                    <p class="subtitle">Карта возможностей для инвесторов и эко-проектов</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#map-section" class="nav-link active">Карта</a>
+                <a href="#metrics-section" class="nav-link">Метрики</a>
+                <a href="#about-section" class="nav-link">О проекте</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Найдите, где купить, держать или создать свою углеродную ферму</h2>
+                <p>Спутниковая верификация «зелёных» инвестиций по данным ESA CCI Biomass, Sentinel-2, GFC и MODIS</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="total-aoi">4</span>
+                        <span class="stat-label">Участка</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-area">7 030</span>
+                        <span class="stat-label">Гектаров</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-units">0</span>
+                        <span class="stat-label">Углеродных единиц</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="total-value">0</span>
+                        <span class="stat-label">Рублей потенциала</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="map-section" class="map-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Карта участков</h2>
+                    <div class="map-controls">
+                        <button class="btn btn-primary active" data-layer="units">Углеродные единицы</button>
+                        <button class="btn btn-secondary" data-layer="value">Стоимость</button>
+                        <button class="btn btn-secondary" data-layer="change">Изменение запаса</button>
+                    </div>
+                </div>
+                <div id="map" class="map"></div>
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-color green"></span> Накопление углерода</div>
+                    <div class="legend-item"><span class="legend-color yellow"></span> Стабильно</div>
+                    <div class="legend-item"><span class="legend-color red"></span> Потеря углерода</div>
+                    <div class="legend-item"><span class="legend-color blue"></span> Пожар 2021</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="metrics-section" class="metrics-section">
+            <div class="container">
+                <h2>Три метрики для инвестора</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card buy">
+                        <div class="metric-icon">🛒</div>
+                        <h3>Покупать</h3>
+                        <p>Для промышленных предприятий, которые хотят минимизировать эко-последствия своей деятельности</p>
+                        <div class="metric-value" id="metric-buy">—</div>
+                    </div>
+                    <div class="metric-card hold">
+                        <div class="metric-icon">📦</div>
+                        <h3>Держать</h3>
+                        <p>Для тех, у кого уже есть лес — заповедники, ООПТ, частные владельцы. Заработок без вырубок</p>
+                        <div class="metric-value" id="metric-hold">—</div>
+                    </div>
+                    <div class="metric-card create">
+                        <div class="metric-icon">🌳</div>
+                        <h3>Создать ферму</h3>
+                        <p>Подобрать место с бесхозным лесом или вырастить свой собственный лес</p>
+                        <div class="metric-value" id="metric-create">—</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="container">
+                <h2>Детальные данные по участкам</h2>
+                <div class="table-wrapper">
+                    <table id="aoi-table">
+                        <thead>
+                            <tr>
+                                <th>Участок</th>
+                                <th>Регион</th>
+                                <th>Площадь, га</th>
+                                <th>Запас 2019, т С/га</th>
+                                <th>Запас 2024, т С/га</th>
+                                <th>ΔC, т С</th>
+                                <th>CO₂-экв., т</th>
+                                <th>Единицы (Q)</th>
+                                <th>Стоимость, руб.</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-section" class="about-section">
+            <div class="container">
+                <h2>О проекте</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>🔬 Научная основа</h3>
+                        <p>Расчёт по методологии МГЭИК (IPCC 2006), коэффициент CF = 0,47, метод разности запасов (stock-difference)</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🛰️ Данные</h3>
+                        <p>ESA CCI Biomass v7.0, Sentinel-2 L2A, Hansen GFC 2025 v1.13, MODIS MCD64A1 v6.1</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>📊 Точность</h3>
+                        <p>Учёт неопределённости, вычет 10%, резерв 15%, округление вниз</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>💡 Дополнительно</h3>
+                        <p>Рекреационный потенциал, объединение с эко-туризмом для дополнительной прибыли</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Космохакатон 2026 • Кейс SR Data • Верификация углеродных кредитов</p>
+            <p class="disclaimer">Данные носят сценарный характер. Не являются сертифицированными углеродными единицами.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
